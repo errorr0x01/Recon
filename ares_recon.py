@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """
-Project Ares - The Perfected Offensive Reconnaissance Engine v9.7
+Project Ares - The Perfected Offensive Reconnaissance Engine v9.8 (Headless)
 
 A self-learning, zero-cost, and fully integrated engine designed for elite
 bug bounty hunting. Ares autonomously discovers, analyzes, and pivots on
-vulnerabilities to conquer the entire attack surface.
+vulnerabilities to conquer the entire attack surface. This version runs
+without any visual reconnaissance dependencies.
 
 *** WARNING: This is an active offensive tool. Use responsibly and only with explicit permission. ***
 """
@@ -36,7 +37,7 @@ class C:
 CONFIG = {
     ### ============================================================================== ###
     ### !!! IMPORTANT !!! PASTE YOUR DISCORD WEBHOOK URL HERE                          ###
-    "DISCORD_WEBHOOK_URL": "YOUR_DISCORD_WEBHOOK_URL_GOES_HERE",
+    "DISCORD_WEBHOOK_URL": "https://discord.com/api/webhooks/1381277354537517168/NYoLrS0OMvVRxBgvb6YkZ31ukXU9vM-Cbpru05cfC-BQvn8Smbj-0u13uVK_YuGWZBI7",
     ### ============================================================================== ###
     
     "USER_AGENTS": [
@@ -52,13 +53,13 @@ def print_banner():
     banner = f"""{C.BOLD}{C.RED}
     ▄▀█─█▀█─█▀▀─█▀▀   █▀█─█▀▀─█▀▀─█▀▄─█▀
     █▀█─█▀▄─█───█▀──   █▄█─█▀▀─█▀──█▀▄─▄█
-    {C.END}{C.YELLOW}          Project Ares: The Perfected Offensive Reconnaissance Engine v9.7{C.END}"""
+    {C.END}{C.YELLOW}          Project Ares: The Perfected Offensive Reconnaissance Engine v9.8 (Headless){C.END}"""
     print(banner)
 
 def check_dependencies():
     print(f"{C.HEADER}[*] Checking Ares Arsenal...{C.END}")
-    # CORRECTED: Replaced "gows" with "g"
-    tools = ["subfinder", "naabu", "httpx", "katana", "nuclei", "dnsx", "gau", "g", "ffuf", "paramspider", "unfurl"]
+    # REMOVED: "g" is no longer a dependency
+    tools = ["subfinder", "naabu", "httpx", "katana", "nuclei", "dnsx", "gau", "ffuf", "paramspider", "unfurl"]
     missing = [tool for tool in tools if not shutil.which(tool)]
     if missing:
         print(f"{C.RED}[!] The following components are missing from the Arsenal: {', '.join(missing)}{C.END}")
@@ -223,7 +224,7 @@ def infrastructure_predictor(subdomains_file):
 
 # --- Main Orchestration ---
 def main():
-    parser = argparse.ArgumentParser(description="Ares - The Perfected Offensive Reconnaissance Engine v9.7.", formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description="Ares - The Perfected Offensive Reconnaissance Engine v9.8 (Headless).", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-d", "--domain", required=True, help="The target root domain to attack.")
     parser.add_argument("--dry-run", action="store_true", help="Run all reconnaissance and analysis phases without executing offensive Nuclei scans.")
     parser.add_argument("--i-have-permission", action="store_true", help="Acknowledge you have explicit, legal authorization for this offensive scan.")
@@ -282,15 +283,8 @@ def main():
     # Phase 2: Deep Content Analysis
     print(f"\n{C.BLUE}--- Phase 2: Deep Content & Attack Surface Analysis ---{C.END}")
     
-    # CORRECTED: Replaced gows with g
-    if live_hosts_file.exists() and live_hosts_file.stat().st_size > 0:
-        visual_recon_dir = content_dir / 'visual'
-        visual_recon_dir.mkdir(exist_ok=True)
-        print(f"{C.CYAN}[>] Performing visual reconnaissance with g...{C.END}")
-        run_command(f"g -i {live_hosts_file} -o {visual_recon_dir} -c 10 -t 20", log_file)
-        attack_graph.add_edge(target_domain, "Visual Recon", "Screenshots\nTaken")
-    else:
-        print(f"{C.YELLOW}[~] No live hosts found to screenshot.{C.END}")
+    # REMOVED: The visual reconnaissance step has been completely removed.
+    print(f"{C.YELLOW}[~] Visual reconnaissance phase skipped as per configuration.{C.END}")
 
     with open(all_urls_file, 'w') as f:
         if live_hosts_file.exists(): f.write(open(live_hosts_file).read() + "\n")
