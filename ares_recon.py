@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Project Ares - The Perfected Offensive Reconnaissance Engine v9.6
+Project Ares - The Perfected Offensive Reconnaissance Engine v9.7
 
 A self-learning, zero-cost, and fully integrated engine designed for elite
 bug bounty hunting. Ares autonomously discovers, analyzes, and pivots on
@@ -52,12 +52,13 @@ def print_banner():
     banner = f"""{C.BOLD}{C.RED}
     ▄▀█─█▀█─█▀▀─█▀▀   █▀█─█▀▀─█▀▀─█▀▄─█▀
     █▀█─█▀▄─█───█▀──   █▄█─█▀▀─█▀──█▀▄─▄█
-    {C.END}{C.YELLOW}          Project Ares: The Perfected Offensive Reconnaissance Engine v9.6{C.END}"""
+    {C.END}{C.YELLOW}          Project Ares: The Perfected Offensive Reconnaissance Engine v9.7{C.END}"""
     print(banner)
 
 def check_dependencies():
     print(f"{C.HEADER}[*] Checking Ares Arsenal...{C.END}")
-    tools = ["subfinder", "naabu", "httpx", "katana", "nuclei", "dnsx", "gau", "gows", "ffuf", "paramspider", "unfurl"]
+    # CORRECTED: Replaced "gows" with "g"
+    tools = ["subfinder", "naabu", "httpx", "katana", "nuclei", "dnsx", "gau", "g", "ffuf", "paramspider", "unfurl"]
     missing = [tool for tool in tools if not shutil.which(tool)]
     if missing:
         print(f"{C.RED}[!] The following components are missing from the Arsenal: {', '.join(missing)}{C.END}")
@@ -222,7 +223,7 @@ def infrastructure_predictor(subdomains_file):
 
 # --- Main Orchestration ---
 def main():
-    parser = argparse.ArgumentParser(description="Ares - The Perfected Offensive Reconnaissance Engine v9.6.", formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description="Ares - The Perfected Offensive Reconnaissance Engine v9.7.", formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("-d", "--domain", required=True, help="The target root domain to attack.")
     parser.add_argument("--dry-run", action="store_true", help="Run all reconnaissance and analysis phases without executing offensive Nuclei scans.")
     parser.add_argument("--i-have-permission", action="store_true", help="Acknowledge you have explicit, legal authorization for this offensive scan.")
@@ -280,7 +281,17 @@ def main():
 
     # Phase 2: Deep Content Analysis
     print(f"\n{C.BLUE}--- Phase 2: Deep Content & Attack Surface Analysis ---{C.END}")
-    run_command(f"gows -i {live_hosts_file} -o {content_dir / 'visual'} --threads 10", log_file)
+    
+    # CORRECTED: Replaced gows with g
+    if live_hosts_file.exists() and live_hosts_file.stat().st_size > 0:
+        visual_recon_dir = content_dir / 'visual'
+        visual_recon_dir.mkdir(exist_ok=True)
+        print(f"{C.CYAN}[>] Performing visual reconnaissance with g...{C.END}")
+        run_command(f"g -i {live_hosts_file} -o {visual_recon_dir} -c 10 -t 20", log_file)
+        attack_graph.add_edge(target_domain, "Visual Recon", "Screenshots\nTaken")
+    else:
+        print(f"{C.YELLOW}[~] No live hosts found to screenshot.{C.END}")
+
     with open(all_urls_file, 'w') as f:
         if live_hosts_file.exists(): f.write(open(live_hosts_file).read() + "\n")
         if historical_urls_file.exists(): f.write(open(historical_urls_file).read() + "\n")
