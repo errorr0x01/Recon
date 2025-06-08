@@ -50,3 +50,15 @@ nuclei -update-templates
 
 # Install required Python libraries
 pip install requests mmh3 graphviz
+Usage
+Configure the Discord Webhook:
+Open ares_engine.py and replace "YOUR_DISCORD_WEBHOOK_URL_GOES_HERE" with your actual Discord webhook URL.
+Make the script executable:
+chmod +x ares_engine.py
+Run the Engine:
+You must acknowledge that you have permission to test the target by using the --i-have-permission flag.
+# Run a full offensive scan
+./ares_engine.py -d example.com --i-have-permission
+
+# Run in reconnaissance-only mode (no attacks)
+./ares_engine.py -d example.com --i-have-permission --dry-run
