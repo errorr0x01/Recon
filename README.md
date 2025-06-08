@@ -1,5 +1,6 @@
-=```bash
-# First, ensure you have the Go language installed: https://go.dev/doc/install
+```bash
+# First, ensure you have the Go language installed:
+# https://go.dev/doc/install
 
 # Install the required Go-based tools
 go install -v github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest
@@ -18,13 +19,17 @@ go install -v github.com/tomnomnom/unfurl@latest
 nuclei -update-templates
 
 # Install Graphviz on your system for visualization
-# On Debian/Ubuntu: sudo apt-get update && sudo apt-get install graphviz
-# On macOS: brew install graphviz
+# On Debian/Ubuntu:
+sudo apt-get update && sudo apt-get install graphviz
+
+# On macOS:
+brew install graphviz
 
 # Install required Python libraries
 pip install requests mmh3 graphviz
 
 # Usage
+
 # Configure the Discord Webhook:
 # Open ares_engine.py and replace "YOUR_DISCORD_WEBHOOK_URL_GOES_HERE" with your actual Discord webhook URL.
 
