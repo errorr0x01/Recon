@@ -1,0 +1,12 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Ares output directories - VERY IMPORTANT
+ares_*/
+*activity.log
+*threat_db.json
+
+# Environment files
+.env
+venv/
