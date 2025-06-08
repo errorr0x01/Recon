@@ -42,6 +42,7 @@ go install -v github.com/devanshbatham/paramspider/cmd/paramspider@latest
 go install -v github.com/tomnomnom/unfurl@latest
 
 # Update Nuclei templates to the latest version
+```bash
 nuclei -update-templates
 
 # Install Graphviz on your system for visualization
@@ -49,16 +50,21 @@ nuclei -update-templates
 # On macOS: brew install graphviz
 
 # Install required Python libraries
+```bash
 pip install requests mmh3 graphviz
 Usage
 Configure the Discord Webhook:
 Open ares_engine.py and replace "YOUR_DISCORD_WEBHOOK_URL_GOES_HERE" with your actual Discord webhook URL.
 Make the script executable:
+```bash
 chmod +x ares_engine.py
+
 Run the Engine:
 You must acknowledge that you have permission to test the target by using the --i-have-permission flag.
 # Run a full offensive scan
+```bash
 ./ares_engine.py -d example.com --i-have-permission
 
 # Run in reconnaissance-only mode (no attacks)
+```bash
 ./ares_engine.py -d example.com --i-have-permission --dry-run
